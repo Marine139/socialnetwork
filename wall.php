@@ -93,7 +93,7 @@
                 while ($post = $lesInformations->fetch_assoc())
                 {
 
-                    echo "<pre>" . print_r($post, 1) . "</pre>";
+                    //echo "<pre>" . print_r($post, 1) . "</pre>";
                     ?>                
                     <article>
                         <h3>
