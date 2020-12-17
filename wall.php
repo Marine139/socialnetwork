@@ -16,7 +16,7 @@ include "src/restricted.php";
  */
 
 $connectedId = $_SESSION['connected_id'];
-$visitedUserId = $_GET['user_id'];
+$visitedUserId = (int)$_GET['user_id'];
 
 /**
  * Etape 2: se connecter à la base de donnée
@@ -101,6 +101,31 @@ if ($enCoursDeTraitement) {
     } else {
         echo "Message posté en tant que :" . $_SESSION['connected_alias'];
     }
+}
+
+$UtilisateurEstIlSuivi = "SELECT COUNT(id) AS nb FROM `followers` WHERE `followed_user_id` = $visitedUserId AND `following_user_id` = $connectedId";
+$UtilisateurSuivi = $mysqli->query($UtilisateurEstIlSuivi);
+$result = $UtilisateurSuivi->fetch_assoc();
+echo "<pre>" . var_export($result, true) . "</pre>";
+
+//echo "<pre>" . print_r($result) . "</pre>";
+//echo "<pre>" . print_r($result['nb']) . "</pre>";
+
+if (!empty($_POST['follow'])) {
+    echo "Bonjour !";
+    // ou echo afficher();
+}
+?>
+
+<form action="" method="post">
+    <input type="submit" id="envoyer" name="follow" value="Follow">
+</form>
+<?php
+if ($result['nb'] == 0) {
+    echo "on est pas abonné à cette personne";
+}
+if ($result['nb'] == 1) {
+    echo " on est abonné à cette personne";
 }
 
 ?>
